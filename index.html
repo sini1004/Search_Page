@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>검색기능</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="reset.css">
+  <script src="tab.js"></script>
+</head>
+<body>
+  
+  <div class="tab-menu">
+    <ul class="list">
+      <li class="is-on">
+        <a href="#tab1" class="btn">중복</a>
+      </li>
+      <li>
+        <a href="#tab2" class="btn">인물검색</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="search-container">
+    <form id="form" action="submit">
+      <input type="text" name="word" id="word" onchange="">
+      <button type="button" value='검색' onclick="changeIframeUrl2()" >검색</button>
+    </form>
+
+    <div class="checkbox-content">
+      <input type='checkbox' name='site' value='daum'/> Daum
+      <input type='checkbox' name='site' value='viaf' /> VIAF
+      <input type='checkbox' name='site' value='dbpedia' /> DBpedia
+      <input type='checkbox' name='site' value='dbpediako' /> dbpedia-ko
+      <input type='checkbox' name='site' value='dbpedialcsh' /> LCSH
+    </div>
+  </div>
+
+  <div class="grid-container">
+    <div class="grid-item" id="item1">
+      <iframe src="https://www.daum.net/" name="frame1" id="frame1"></iframe>
+    </div>
+    <div class="grid-item" id="item2">
+      <iframe src="https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select%20*%20where%20{%20?s%20rdfs:label%20%27%EA%B3%B5%EC%A7%80%EC%98%81%27@ko%20.%20?s%20rdf:type%20foaf:Person%20.%20optional%20{%20?s%20dbo:birthDate%20?birthDate%20}%20optional%20{%20?s%20dbo:birthPlace%20?birthPlace%20}%20optional%20{%20?s%20dbo:citizenship%20?citizenship%20}%20optional%20{%20?s%20dbo:almaMater%20?almaMater%20}%20}&format=text%2Fhtml&timeout=30000&signal_void=on&signal_unconnected=on" name="frame2" id="frame2"></iframe>
+    </div>
+    <!-- <div class="grid-item" id="item3">
+      <iframe src="https://www.daum.net/" frameborder="0"></iframe>
+    </div>
+    <div class="grid-item" id="item4">
+      <iframe src="https://www.daum.net/" frameborder="0"></iframe>
+    </div> -->
+  </div>
+
+
+
+  <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+  <script>
+
+    let inputWord;
+
+    function changeIframeUrl() {
+      inputWord = document.getElementById('word').value;  
+      document.getElementById("frame1").src = `https://search.daum.net/search?nil_suggest=btn&w=tot&DA=SBC&q=${inputWord}`;
+    }
+
+    function changeIframeUrl2() {
+      inputWord = document.getElementById('word').value;  
+      let query = `select * where {
+        ?s rdfs:label '${inputWord}'@ko .
+        ?s rdf:type foaf:Person . 
+        optional { ?s dbo:birthDate ?birthDate }
+        optional { ?s dbo:birthPlace ?birthPlace }
+        optional { ?s dbo:citizenship ?citizenship }
+        optional { ?s dbo:almaMater ?almaMater }
+      }`
+      document.getElementById("frame2").src = `https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=${query}&format=text%2Fhtml&timeout=30000&signal_void=on&signal_unconnected=on`;
+    }
+
+    // function inputValueChange() {  
+    //   inputWord = document.getElementById('word').value;    
+    // }
+
+
+  </script>
+</body>
+</html>
