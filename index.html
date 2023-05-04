@@ -7,7 +7,6 @@
   <title>검색기능</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="reset.css">
-  <script src="tab.js"></script>
 </head>
 <body>
   
@@ -25,15 +24,19 @@
   <div class="search-container">
     <form id="form" action="submit">
       <input type="text" name="word" id="word" onchange="">
-      <button type="button" value='검색' onclick="changeIframeUrl2()" >검색</button>
+      <!-- <button type="button" value='검색' onclick="changeIframeUrl()" >검색</button> -->
+      <button type="button" value='검색' onclick="getCheckboxValue()" >검색</button>
     </form>
 
+
     <div class="checkbox-content">
-      <input type='checkbox' name='site' value='daum'/> Daum
-      <input type='checkbox' name='site' value='viaf' /> VIAF
-      <input type='checkbox' name='site' value='dbpedia' /> DBpedia
-      <input type='checkbox' name='site' value='dbpediako' /> dbpedia-ko
-      <input type='checkbox' name='site' value='dbpedialcsh' /> LCSH
+      <input class="checkSite" type='checkbox' name='site' value='daum'/> Daum
+      <input class="checkSite" type='checkbox' name='site' value='dbpedia' /> DBpedia
+      <input class="checkSite" type='checkbox' name='site' value='bing' /> Bing
+      <input class="checkSite" type='checkbox' name='site' value='yahoo' /> yahoo
+      <!-- <input class="checkSite" type='checkbox' name='site' value='dbpediako' /> DBpedia-ko -->
+      <!-- <input class="checkSite" type='checkbox' name='site' value='viaf' /> VIAF -->
+      <input class="checkSite" type='checkbox' name='site' value='dbpedialcsh' /> LCSH
     </div>
   </div>
 
@@ -44,21 +47,20 @@
     <div class="grid-item" id="item2">
       <iframe src="https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select%20*%20where%20{%20?s%20rdfs:label%20%27%EA%B3%B5%EC%A7%80%EC%98%81%27@ko%20.%20?s%20rdf:type%20foaf:Person%20.%20optional%20{%20?s%20dbo:birthDate%20?birthDate%20}%20optional%20{%20?s%20dbo:birthPlace%20?birthPlace%20}%20optional%20{%20?s%20dbo:citizenship%20?citizenship%20}%20optional%20{%20?s%20dbo:almaMater%20?almaMater%20}%20}&format=text%2Fhtml&timeout=30000&signal_void=on&signal_unconnected=on" name="frame2" id="frame2"></iframe>
     </div>
-    <!-- <div class="grid-item" id="item3">
-      <iframe src="https://www.daum.net/" frameborder="0"></iframe>
+    <div class="grid-item" id="item3">
+      <iframe src="https://www.bing.com/" name="frame3" id="frame3"></iframe>
     </div>
     <div class="grid-item" id="item4">
-      <iframe src="https://www.daum.net/" frameborder="0"></iframe>
-    </div> -->
+      <iframe src="https://www.yahoo.com/" name="frame4" id="frame4"></iframe>
+    </div>
   </div>
 
-
-
-  <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 
   <script>
 
     let inputWord;
+    let siteChkArr = document.querySelectorAll(".checkSite");
+    siteChkArr = Array.from(siteChkArr);
 
     function changeIframeUrl() {
       inputWord = document.getElementById('word').value;  
@@ -78,9 +80,58 @@
       document.getElementById("frame2").src = `https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=${query}&format=text%2Fhtml&timeout=30000&signal_void=on&signal_unconnected=on`;
     }
 
-    // function inputValueChange() {  
-    //   inputWord = document.getElementById('word').value;    
-    // }
+    function changeIframeUrl3() {
+      inputWord = document.getElementById('word').value;
+      document.getElementById('frame3').src = `https://www.bing.com/search?q=${inputWord}&form=QBLH&sp=-1&lq=0&pq=${inputWord}&sc=10-3&qs=n&sk=&cvid=BB3A4200C313497F819D7702D6F3F35C&ghsh=0&ghacc=0&ghpl=`;
+    }
+    
+    function changeIframeUrl4() {
+      inputWord = document.getElementById('word').value;
+      document.getElementById('frame4').src = `https://search.yahoo.com/search?p=${inputWord}fr=yfp-t&fr2=p%3Afp%2Cm%3Asb&ei=UTF-8&fp=1`;
+    }
+
+    function getCheckboxValue() {
+
+      siteChkArr.map(item => {
+        if(item.checked === true){
+          if (item.value === 'daum') {
+            changeIframeUrl();
+          } else if (item.value === 'dbpedia') {
+            changeIframeUrl2();
+          } else if (item.value === 'bing') {
+            changeIframeUrl3();
+          } else {
+            
+          }
+        } else {
+          
+        }
+      })
+
+      // 4개 까지만
+
+      
+      
+      
+      
+      
+      // for (let i = 0; i < sitelength; i++) {
+
+      //   let site = document.querySelector('input[type=checkbox][name=site]:checked').value;
+      //   let siteselect = document.getElementsByName("site")[i].checked;
+
+      //   if (site == 'daum') {
+      //     console.log(siteselect);
+      //     changeIframeUrl();
+      //   } else if (site == 'viaf') {
+      //     changeIframeUrl2();
+      //   } else {
+      //     console.log('X');
+      //   }
+
+      // }
+    }
+
 
 
   </script>
