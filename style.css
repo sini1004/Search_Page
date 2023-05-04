@@ -74,6 +74,10 @@ iframe {
   height: 100%;
   border: none;
 }
+#item4 table, #item4 td, #item4 th {
+  border: 1px solid black;
+  border-collapse: collapse;
+};
 
 
 /* 최대화 최소화 */
