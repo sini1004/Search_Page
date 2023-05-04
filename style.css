@@ -8,7 +8,31 @@
 .tab-menu .list li.is-on .cont{display:block;}
 
 /* 검색바 */
+.inner-form {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  height: 50px;
+  margin: 20px auto;
+}
 
+.inner-form button {
+  width: 13%;
+}
+
+#word {
+  width: 85%;
+}
+
+/* 체크박스 */
+.checkbox-content{
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+.checkbox-content input {
+  margin:0 5px 0 20px;
+}
 /*  */
 .grid-container {
   display: grid;
@@ -21,11 +45,13 @@
 .grid-item {
   border: 1px solid rgb(218, 218, 218);
   width: 100%;
-  height: 100%;
+  height: 90%;
 }
+/* 각 영역 ID 설정 */
 #item1, #item2, #item3, #item4 {
-  overflow: hidden;
+  display: block;
 }
+
 #item1 {
   grid-row: 1 / 2;
   grid-column: 1 / 2;
@@ -47,4 +73,27 @@ iframe {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+
+/* 최대화 최소화 */
+.input-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  padding: 20px;
+  height: 100px;
+}
+.controlBtn{
+  border: 1px solid #dcdcdc;
+  width: 100px;
+  height: 40px;
+  background-color: dodgerblue;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.controlBtn:hover{
+  opacity: 0.7;
 }

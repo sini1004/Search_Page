@@ -5,135 +5,219 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>검색기능</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="reset.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 </head>
 <body>
   
   <div class="tab-menu">
-    <ul class="list">
-      <li class="is-on">
-        <a href="#tab1" class="btn">중복</a>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="duplicated-tab" data-bs-toggle="tab" data-bs-target="#duplicated-tab-pane" type="button" role="tab" aria-controls="duplicated" aria-selected="true">중복</button>
       </li>
-      <li>
-        <a href="#tab2" class="btn">인물검색</a>
+      <li class="nav-item" role="presentation">
+          <button class="nav-link" id="search-tab" data-bs-toggle="tab" data-bs-target="#search-tab-pane" type="button" role="tab" aria-controls="search" aria-selected="false">인물검색</button>
       </li>
     </ul>
   </div>
 
-  <div class="search-container">
-    <form id="form" action="submit">
-      <input type="text" name="word" id="word" onchange="">
-      <!-- <button type="button" value='검색' onclick="changeIframeUrl()" >검색</button> -->
-      <button type="button" value='검색' onclick="getCheckboxValue()" >검색</button>
-    </form>
+  
+  <div class="wrapper">
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="duplicated-tab-pane" role="tabpanel" aria-labelledby="duplicated-tab">
+        <div>
+            <form>
+                <div class="inner-form">
+                    <input id="search" type="text" placeholder="검색할 이름을 입력해주세요." />
+                    <button class="btn-search" type="button">검색</button>
+                </div>
+            </form>
+        </div><!--검색바 div_end-->
+        <div>
+          <table id="datatable" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">이름</th>
+                    <th scope="col">저자1</th>
+                    <th scope="col">저자2</th>
+                    <th scope="col">총합</th>
+                    <th scope="col">fieldOfActivity</th>
+                    <th scope="col">create</th>
+                    <th scope="col">birthYear</th>
+                    <th scope="col">deathYear</th>
+                    <th scope="col">source</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                </tr>
+            </tbody>
+          </table>
+        </div><!--table div_end-->
+      </div>
 
-
-    <div class="checkbox-content">
-      <input class="checkSite" type='checkbox' name='site' value='daum'/> Daum
-      <input class="checkSite" type='checkbox' name='site' value='dbpedia' /> DBpedia
-      <input class="checkSite" type='checkbox' name='site' value='bing' /> Bing
-      <input class="checkSite" type='checkbox' name='site' value='yahoo' /> yahoo
-      <!-- <input class="checkSite" type='checkbox' name='site' value='dbpediako' /> DBpedia-ko -->
-      <!-- <input class="checkSite" type='checkbox' name='site' value='viaf' /> VIAF -->
-      <input class="checkSite" type='checkbox' name='site' value='dbpedialcsh' /> LCSH
-    </div>
-  </div>
-
-  <div class="grid-container">
-    <div class="grid-item" id="item1">
-      <iframe src="https://www.daum.net/" name="frame1" id="frame1"></iframe>
-    </div>
-    <div class="grid-item" id="item2">
-      <iframe src="https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select%20*%20where%20{%20?s%20rdfs:label%20%27%EA%B3%B5%EC%A7%80%EC%98%81%27@ko%20.%20?s%20rdf:type%20foaf:Person%20.%20optional%20{%20?s%20dbo:birthDate%20?birthDate%20}%20optional%20{%20?s%20dbo:birthPlace%20?birthPlace%20}%20optional%20{%20?s%20dbo:citizenship%20?citizenship%20}%20optional%20{%20?s%20dbo:almaMater%20?almaMater%20}%20}&format=text%2Fhtml&timeout=30000&signal_void=on&signal_unconnected=on" name="frame2" id="frame2"></iframe>
-    </div>
-    <div class="grid-item" id="item3">
-      <iframe src="https://www.bing.com/" name="frame3" id="frame3"></iframe>
-    </div>
-    <div class="grid-item" id="item4">
-      <iframe src="https://www.yahoo.com/" name="frame4" id="frame4"></iframe>
-    </div>
-  </div>
-
-
-  <script>
-
-    let inputWord;
-    let siteChkArr = document.querySelectorAll(".checkSite");
-    siteChkArr = Array.from(siteChkArr);
-
-    function changeIframeUrl() {
-      inputWord = document.getElementById('word').value;  
-      document.getElementById("frame1").src = `https://search.daum.net/search?nil_suggest=btn&w=tot&DA=SBC&q=${inputWord}`;
-    }
-
-    function changeIframeUrl2() {
-      inputWord = document.getElementById('word').value;  
-      let query = `select * where {
-        ?s rdfs:label '${inputWord}'@ko .
-        ?s rdf:type foaf:Person . 
-        optional { ?s dbo:birthDate ?birthDate }
-        optional { ?s dbo:birthPlace ?birthPlace }
-        optional { ?s dbo:citizenship ?citizenship }
-        optional { ?s dbo:almaMater ?almaMater }
-      }`
-      document.getElementById("frame2").src = `https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=${query}&format=text%2Fhtml&timeout=30000&signal_void=on&signal_unconnected=on`;
-    }
-
-    function changeIframeUrl3() {
-      inputWord = document.getElementById('word').value;
-      document.getElementById('frame3').src = `https://www.bing.com/search?q=${inputWord}&form=QBLH&sp=-1&lq=0&pq=${inputWord}&sc=10-3&qs=n&sk=&cvid=BB3A4200C313497F819D7702D6F3F35C&ghsh=0&ghacc=0&ghpl=`;
-    }
-    
-    function changeIframeUrl4() {
-      inputWord = document.getElementById('word').value;
-      document.getElementById('frame4').src = `https://search.yahoo.com/search?p=${inputWord}fr=yfp-t&fr2=p%3Afp%2Cm%3Asb&ei=UTF-8&fp=1`;
-    }
-
-    function getCheckboxValue() {
-
-      siteChkArr.map(item => {
-        if(item.checked === true){
-          if (item.value === 'daum') {
-            changeIframeUrl();
-          } else if (item.value === 'dbpedia') {
-            changeIframeUrl2();
-          } else if (item.value === 'bing') {
-            changeIframeUrl3();
-          } else {
-            
-          }
-        } else {
+      
+      <div class="tab-pane fade" id="search-tab-pane" role="tabpanel" aria-labelledby="search-tab">
+        <div>
+          <form id="form" class="input-container" action="submit">
+            <div class="inner-form">
+              <input type="text" name="word" id="word" onchange="" placeholder="검색할 이름을 입력해주세요.">
+              <button type="button" value='검색' onclick="getCheckboxValue()" >검색</button>
+            </div>
+          </form>
+          <div class="checkbox-content">
+            <input class="checkSite" type='checkbox' name='site' value='daum'/> Daum
+            <input class="checkSite" type='checkbox' name='site' value='dbpedia' /> DBpedia
+            <input class="checkSite" type='checkbox' name='site' value='dbpediako' /> DBpedia-ko
+            <input class="checkSite" type='checkbox' name='site' value='viaf' /> VIAF
+            <input class="checkSite" type='checkbox' name='site' value='dbpedialcsh' /> LCSH
+          </div>
+        </div>
+      
+        <div class="grid-container">
+          <div class="grid-item" id="item1">
+            <button onclick="(e)=>{}" class="controlBtn minimize" attr-max="">최대화</button>
+            <iframe src="https://www.daum.net/" name="frame1" id="frame1"></iframe>
+          </div>
+          <div class="grid-item" id="item2">
+            <button onclick="(e)=>{}" class="controlBtn minimize" attr-max="">최대화</button>
+            <iframe src="https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select%20*%20where%20{%20?s%20rdfs:label%20%27%EA%B3%B5%EC%A7%80%EC%98%81%27@ko%20.%20?s%20rdf:type%20foaf:Person%20.%20optional%20{%20?s%20dbo:birthDate%20?birthDate%20}%20optional%20{%20?s%20dbo:birthPlace%20?birthPlace%20}%20optional%20{%20?s%20dbo:citizenship%20?citizenship%20}%20optional%20{%20?s%20dbo:almaMater%20?almaMater%20}%20}&format=text%2Fhtml&timeout=30000&signal_void=on&signal_unconnected=on" name="frame2" id="frame2"></iframe>
+          </div>
+          <!-- <div class="grid-item" id="item3">
+            <iframe src="https://www.bing.com/" name="frame3" id="frame3"></iframe>
+          </div>
+          <div class="grid-item" id="item4">
+            <iframe src="https://www.yahoo.com/" name="frame4" id="frame4"></iframe>
+          </div> -->
           
-        }
-      })
-
-      // 4개 까지만
-
-      
-      
-      
-      
-      
-      // for (let i = 0; i < sitelength; i++) {
-
-      //   let site = document.querySelector('input[type=checkbox][name=site]:checked').value;
-      //   let siteselect = document.getElementsByName("site")[i].checked;
-
-      //   if (site == 'daum') {
-      //     console.log(siteselect);
-      //     changeIframeUrl();
-      //   } else if (site == 'viaf') {
-      //     changeIframeUrl2();
-      //   } else {
-      //     console.log('X');
-      //   }
-
-      // }
-    }
+          <div class="grid-item" id="item3">
+            <button onclick="(e)=>{}" class="controlBtn minimize" attr-max="">최대화</button>
+            <iframe src="https://viaf.org/"></iframe>
+          </div>
+          <div class="grid-item" id="item4" style="overflow-y: scroll;">
+            <button onclick="(e)=>{}" class="controlBtn minimize" attr-max="">최대화</button>
+            <!-- <iframe src="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=%EB%B0%95%EA%B2%BD%EB%A6%AC"></iframe> -->
+            <table>
+              <thead>
+                  <tr>
+                      <th colspan="2">검색 결과</th>
+                  </tr>
+                  <tr>
+                      <th>#</th>
+                      <th>표목</th>
+                  </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
 
+    </div><!--tab-content-->
 
+  </div><!--wrapper-->
+
+
+  <script src="index.js"></script>
+  <script src="search.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
+  <script type="module" src="https://unpkg.com/x-frame-bypass"></script>
+  <script type="text/javascript" charset="utf-8">
+      $(document).ready(function() {
+          $('#datatable').dataTable( {
+              "lengthMenu": [ [-1, 100, 50, 25, 10], ["All", 100, 50, 25, 10] ],
+              "searching": false
+          } );
+      });
+  </script>
+  <script>
+      var requestURL = `https://viaf.org/viaf/search?query=cql.any%20all%20"${inputWord}"&sortKeys=holdingscount&httpAccept=application/json&recordSchema=info:srw/schema/1/JSON`;
+      var request = new XMLHttpRequest();
+      request.open('GET', requestURL);
+      request.responseType = 'json';
+      request.send();
+      request.onload = function() {
+          var viafData = request.response;
+          var viafDataResponse = [];
+          var viafDataRecords = [];
+          viafDataResponse = viafData.searchRetrieveResponse.records;
+          for(let i = 0; i < viafDataResponse.length; i++) {
+              var temp = [];
+              var temp2;
+              if(viafDataResponse[i].record.recordData.mainHeadings.data.length > 0) {
+                  for(let j = 0; j < viafDataResponse[i].record.recordData.mainHeadings.data.length; j++) {
+                      temp2 = viafDataResponse[i].record.recordData.mainHeadings.data[j].text;
+                      temp.push(temp2);
+                  }
+              } else {
+                  temp2 = viafDataResponse[i].record.recordData.mainHeadings.data.text;
+                  temp.push(temp2);
+              }
+              // console.log(temp2);
+              viafDataRecords.push(temp);
+              // console.log(viafDataRecords[i]);
+          }
+          
+          for(let i = 0; i < viafDataRecords.length; i++) {
+              var myArticle = document.getElementById('tableBody');
+              var tableRow = document.createElement('tr');
+              var myNumber = document.createElement('td');
+              var myData = document.createElement('td');
+              myNumber.textContent = [i + 1];
+              var temp = myArticle.appendChild(tableRow);
+              temp.appendChild(myNumber);
+              
+              for(let j = 0; j < viafDataRecords[i].length; j++) {
+                  var myPara = document.createElement('p');
+                  myPara.textContent = viafDataRecords[i][j];
+                  // console.log(myPara);
+                  myData.appendChild(myPara);
+              }
+              temp.appendChild(myData);
+          }
+      }
   </script>
 </body>
 </html>
