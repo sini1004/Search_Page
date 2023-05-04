@@ -61,3 +61,5 @@ const handleMinWindow = (item) => {
   item4.style.gridColumn = " 2/3";
 };
 
+// 버튼 내용 변경 함수 실핼 시켜서 이벤트 부여하는 것
+handleTextBtn();

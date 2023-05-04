@@ -25,10 +25,11 @@ let inputWord;
     //   document.getElementById('frame3').src = `https://www.bing.com/search?q=${inputWord}&form=QBLH&sp=-1&lq=0&pq=${inputWord}&sc=10-3&qs=n&sk=&cvid=BB3A4200C313497F819D7702D6F3F35C&ghsh=0&ghacc=0&ghpl=`;
     // }
     
-    // function changeIframeUrl4() {
-    //   inputWord = document.getElementById('word').value;
-    //   document.getElementById('frame4').src = `https://search.yahoo.com/search?p=${inputWord}fr=yfp-t&fr2=p%3Afp%2Cm%3Asb&ei=UTF-8&fp=1`;
-    // }
+    function changeIframeUrl4() {
+      inputWord = document.getElementById('word').value;
+      console.log('4번째 칸');
+      document.getElementById('frame4').innerHTML = `${inputWord}`;
+    }
 
     function getCheckboxValue() {
 
@@ -38,9 +39,9 @@ let inputWord;
             changeIframeUrl();
           } else if (item.value === 'dbpedia') {
             changeIframeUrl2();
-          } else if (item.value === 'bing') {
-            // changeIframeUrl3();
-            // console.log('bing없어요');
+          } else if (item.value === 'viaf') {
+            changeIframeUrl4();
+            console.log('bing없어요');
           } 
           else {
             
